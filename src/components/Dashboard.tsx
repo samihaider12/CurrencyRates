@@ -3,7 +3,7 @@ import {
   Container, Typography, Box, Paper, Grid,
   Button, TextField, Stack, Alert
 } from '@mui/material';
-import ReusableTable from '../components/ReusableTable';
+import ReusableTable from './ReusableTable';
 import { useSearchParams } from 'react-router-dom';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';

@@ -12,42 +12,50 @@ const CurrencyChart = ({ chartData }: { chartData: any[] }) => {
         <Grid container spacing={3} sx={{ mb: 4 }}>
 
             {/* 1. Bar Chart */}
-            <Grid size={{ xs: 12, md: 8 }}>
+            <Grid   size={{xs:12 ,md:8}}> 
                 <Paper sx={{
-                    p: 3, borderRadius: 4, height: 420, boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                    background: 'linear-gradient(to bottom, #ffffff, #fdfdff)'
+                    p: 3, 
+                    borderRadius: 4, 
+                    height: 420, 
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                    background: 'linear-gradient(to bottom, #ffffff, #fdfdff)',
+                    display: 'flex',
+                    flexDirection: 'column'
                 }}>
                     <Typography variant="h6" sx={{ mb: 3, fontWeight: 700, color: '#1e293b' }}>
                         Currency Volume Analysis
                     </Typography>
-                    <ResponsiveContainer width="100%" height="85%">
-                        <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                            <defs>
-                                <linearGradient id="barColor" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stopColor="#6366f1" stopOpacity={1} />
-                                    <stop offset="100%" stopColor="#a5b4fc" stopOpacity={0.8} />
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
-                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
-                            <Tooltip
-                                cursor={{ fill: '#f8fafc' }}
-                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
-                            />
-                            <Bar
-                                dataKey="total"
-                                fill="url(#barColor)"
-                                radius={[6, 6, 0, 0]}
-                                barSize={32}
-                            />
-                        </BarChart>
-                    </ResponsiveContainer>
+                    {/* Added a Box wrapper with minWidth 0 to prevent the -1 width error */}
+                    <Box sx={{ flexGrow: 1, width: '100%', minWidth: 0 }}>
+                        <ResponsiveContainer width="100%" height="85%" debounce={50}>
+                            <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                <defs>
+                                    <linearGradient id="barColor" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stopColor="#6366f1" stopOpacity={1} />
+                                        <stop offset="100%" stopColor="#a5b4fc" stopOpacity={0.8} />
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                                <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
+                                <Tooltip
+                                    cursor={{ fill: '#f8fafc' }}
+                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
+                                />
+                                <Bar
+                                    dataKey="total"
+                                    fill="url(#barColor)"
+                                    radius={[6, 6, 0, 0]}
+                                    barSize={32}
+                                />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </Box>
                 </Paper>
             </Grid>
 
-            {/* 2. Pie Chart - Cleaned from TS Errors */}
-            <Grid size={{ xs: 12, md: 4 }}>
+            {/* 2. Pie Chart */}
+            <Grid size={{xs:12 ,md:4}}>
                 <Paper sx={{
                     p: 3, borderRadius: 4, height: 420, boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                     display: 'flex', flexDirection: 'column'
@@ -55,8 +63,9 @@ const CurrencyChart = ({ chartData }: { chartData: any[] }) => {
                     <Typography variant="h6" sx={{ mb: 3, fontWeight: 700, color: '#1e293b' }}>
                         Transaction Mix
                     </Typography>
-                    <Box sx={{ flexGrow: 1, width: '100%', height: '100%' }}>
-                        <ResponsiveContainer width="100%" height="100%">
+                    {/* Added minWidth: 0 and debounce to the Pie container as well */}
+                    <Box sx={{ flexGrow: 1, width: '100%', height: '100%', minWidth: 0 }}>
+                        <ResponsiveContainer width="100%" height="100%" debounce={50}>
                             <PieChart>
                                 <Pie
                                     data={chartData}
@@ -89,7 +98,5 @@ const CurrencyChart = ({ chartData }: { chartData: any[] }) => {
         </Grid>
     );
 };
-
-
 
 export default CurrencyChart;
